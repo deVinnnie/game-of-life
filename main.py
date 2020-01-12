@@ -7,7 +7,8 @@ import click
 
 class GameOfLife:
 
-    def __init__(self, lines=1, rows=1):
+    def __init__(self, lines=1, rows=1, seed=1):
+        random.seed(seed)
         self.grid = []
         self.grid = [None] * lines
 
@@ -57,10 +58,15 @@ class GameOfLife:
 
         self.grid = new_grid
 
-def main(stdscr):
+@click.command()
+@click.option('--seed', default=1, type=int)
+def start_curses(seed):
+    wrapper(main, seed)
+
+def main(stdscr, seed):
     stdscr.clear()
 
-    game = GameOfLife(curses.LINES-1, curses.COLS-1)
+    game = GameOfLife(curses.LINES-1, curses.COLS-1, seed)
 
     stdscr.nodelay(True)
 
@@ -80,4 +86,4 @@ def main(stdscr):
         time.sleep(0.250)
 
 if __name__ == "__main__":
-    wrapper(main)
+    start_curses()
