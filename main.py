@@ -69,6 +69,7 @@ def main(stdscr, seed):
     game = GameOfLife(curses.LINES-1, curses.COLS-1, seed)
 
     stdscr.nodelay(True)
+    curses.curs_set(0)
 
     while True:
         c = stdscr.getch()
